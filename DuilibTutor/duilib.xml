@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Window size="800,600">
+    <HorizontalLayout bkcolor="#FF00FF00">
+	    <Button name="btnHello" text="Hello World"/>
+	</HorizontalLayout>
+<Window>

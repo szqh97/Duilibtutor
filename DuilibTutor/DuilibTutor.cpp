@@ -24,13 +24,12 @@ public:
 		LPARAM lParam){
 		LRESULT lRes = 0;
 		if (uMsg == WM_CREATE){
-			CControlUI* pWnd = new CButtonUI;
-			pWnd->SetName(_T("btnHello"));
-			pWnd->SetText(_T("Hello World"));
-			pWnd->SetBkColor(0xFF00FF00);
-
 			m_PaintManager.Init(m_hWnd);
-			m_PaintManager.AttachDialog(pWnd);
+			CDialogBuilder builder;
+			CControlUI *pRoot = builder.Create(_T("duilib.xml"), (UINT)0, NULL, &m_PaintManager);
+			ASSERT(pRoot &&"Faild to parse XML");
+
+			m_PaintManager.AttachDialog(pRoot);
 			m_PaintManager.AddNotifier(this);
 			return lRes;
 		}
@@ -63,8 +62,10 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	_In_ int       nCmdShow)
 {
 	CPaintManagerUI::SetInstance(hInstance);
+	CPaintManagerUI::SetResourcePath(CPaintManagerUI::GetInstancePath());
 	CDuiFrameWind duiFrame;
 	duiFrame.Create(NULL, _T("DUIFRame"), UI_WNDSTYLE_FRAME, WS_EX_WINDOWEDGE);
+	duiFrame.CenterWindow();
 	duiFrame.ShowModal();
 	return 0;
 }
